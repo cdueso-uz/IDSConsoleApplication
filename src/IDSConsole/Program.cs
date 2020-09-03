@@ -23,7 +23,7 @@ namespace IDSConsole
                 MaxAutomaticRedirections = 20
             });
 
-            //1 - Send Authenticate call
+            
             var login = new LoginRequest()
             {
                 Client_Id = "patata",
@@ -36,6 +36,7 @@ namespace IDSConsole
             var request = new StringContent(JsonConvert.SerializeObject(login), Encoding.UTF8, "application/json");
             try
             {
+                //1 - Send Authenticate call
                 var responseAuthenticate = await client.PostAsync($"http://{hostName}:5000/co/Authenticate", request);
                 var cookies = responseAuthenticate.Headers.SingleOrDefault(header => header.Key == "Set-Cookie").Value;
 
