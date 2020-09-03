@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using IDSConsole.Models;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.WebUtilities;
 
 namespace IDSConsole
 {
@@ -43,7 +44,9 @@ namespace IDSConsole
                                            $"response_type=code&redirect_uri=https://www.google.com&state=Tj0xpy1Q" +
                                            $"&connection=UZManagerUsersMigration-dev&realm=UZManagerUsersMigration-dev&login_ticket=R-SvDuFgyPbjKRdBSyGXPN4Nl0m4euZP";
                 var responseAuthorize = await client.GetAsync(authorizeQueryString);
-                var authorizeCode= responseAuthorize.RequestMessage.RequestUri.Query;
+                var codeAuthorize = QueryHelpers.ParseQuery(responseAuthorize.RequestMessage.RequestUri.Query)["code"].First();
+
+                //3 - connect/Token
 
             }
             catch(Exception ex)
