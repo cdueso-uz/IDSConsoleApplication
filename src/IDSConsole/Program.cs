@@ -24,14 +24,21 @@ namespace IDSConsole
                 Password = "alice",
                 Realm = "db"
             };
+
             var request = new StringContent(JsonConvert.SerializeObject(login), Encoding.UTF8, "application/json");
             try
             {
-                var responseAuthenticate = await client.PostAsync("http://localhost:10001/co/Authenticate", request );
+                HttpResponseMessage responseAuthenticate = await client.PostAsync("https://localhost:5001/co/Authenticate", request);
+
+                IEnumerable<string> cookies = responseAuthenticate.Headers.SingleOrDefault(header => header.Key == "Set-Cookie").Value;
+
+
+
+
             }
             catch(Exception ex)
             {
-                int i = 0;
+                Console.WriteLine("An exception ocurred! Exception message: ", ex.Message);
             }
         }
     }
