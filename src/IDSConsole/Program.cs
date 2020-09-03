@@ -27,15 +27,16 @@ namespace IDSConsole
                 Password = "alice",
                 Realm = "db"
             };
+
             var request = new StringContent(JsonConvert.SerializeObject(login), Encoding.UTF8, "application/json");
             try
             {
                 //1 - Send Authenticate call
-                var responseAuthenticate = await client.PostAsync($"{hostAddress}/co/Authenticate", request);
+                var responseAuthenticate = await client.PostAsync($"{hostAddress}/co/authenticate", request);
                 var cookies = responseAuthenticate.Headers.SingleOrDefault(header => header.Key == "Set-Cookie").Value;
 
                 //2 - connect/Authorize
-                var authorizeQueryString = $"{hostAddress}/connect/authorize?client_id=client&scope=openid profile email offline_access&" +
+                var authorizeQueryString = $"{hostAddress}/authorize?client_id=client&scope=openid profile email offline_access&" +
                                            $"response_type=code&redirect_uri=https://www.google.com&state=Tj0xpy1Q" +
                                            $"&connection=UZManagerUsersMigration-dev&realm=UZManagerUsersMigration-dev&login_ticket=R-SvDuFgyPbjKRdBSyGXPN4Nl0m4euZP";
                 var responseAuthorize = await client.GetAsync(authorizeQueryString);
@@ -53,7 +54,7 @@ namespace IDSConsole
                     new KeyValuePair<string, string>("redirect_uri", "https://www.google.com")
                 };
 
-                var tokenRequest = new HttpRequestMessage(HttpMethod.Post, $"{hostAddress}/connect/token")
+                var tokenRequest = new HttpRequestMessage(HttpMethod.Post, $"{hostAddress}/oauth/token")
                 {
                     Content = new FormUrlEncodedContent(keyValuePairs)
                 };
