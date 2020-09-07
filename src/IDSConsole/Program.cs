@@ -17,21 +17,22 @@ namespace IDSConsole
 
         public static async Task Main(string[] args)
         {
-            var clientUICookie = new HttpClient();
-
-            var login = new LoginRequest()
-            {
-                Client_Id = "patata",
-                Credential_Type = "unknow",
-                Username = "alice",
-                Password = "alice",
-                Realm = "db"
-            };
-
-            var request = new StringContent(JsonConvert.SerializeObject(login), Encoding.UTF8, "application/json");
             try
             {
+                //0 - Create User
+                var user = await AddUser();
+
                 //1 - Send Authenticate call
+                var clientUICookie = new HttpClient();
+                var request = new StringContent(JsonConvert.SerializeObject(new LoginRequest()
+                {
+                    Client_Id = "client",
+                    Credential_Type = "unknow",
+                    Username = user.NickName,
+                    Password = user.Password,
+                    Realm = "db"
+                }), Encoding.UTF8, "application/json");
+
                 var responseAuthenticate = await clientUICookie.PostAsync($"{hostAddress}/co/authenticate", request);
                 var cookies = responseAuthenticate.Headers.SingleOrDefault(header => header.Key == "Set-Cookie").Value;
 
@@ -67,11 +68,48 @@ namespace IDSConsole
                 var responseLogout = await clientUICookie.GetAsync(logoutQueryString);
                 var cookiesLogout = responseAuthenticate.Headers.SingleOrDefault(header => header.Key == "Set-Cookie").Value;
 
+                //5  Delete User
+                await DeleteUser(user);
+
             }
             catch (Exception ex)
             {
                 Console.WriteLine("An exception ocurred! Exception message: ", ex.Message);
             }
+        }
+
+        private static async Task<NewUserRequest> AddUser()
+        {
+            var client = new HttpClient();
+            var uuid = Guid.Parse("876eb143-e9f6-4024-8908-db14704e9678");
+            var user = new NewUserRequest()
+            {
+                UUid = uuid,
+                Id = 46457,
+                Email = "pepito@email.com",
+                EmailVerified = true, 
+                FamilyName = "Palotes",
+                GivenName = "Pepito",
+                Locale = "en",
+                Name = "Pepito Palotes",
+                NickName = "pepito",
+                Password = "pepito",
+                Picture = "https://cdn.pixabay.com/photo/2020/02/22/16/29/penguin-4871045_1280.png",
+                Sub = $"auth0|{uuid}",
+                UpdatedAt = DateTime.UtcNow,
+                UserZoomName = "Pepito Palotes",
+            };
+            var request = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
+            var result = await client.PostAsync($"{hostAddress}/Instrumentation", request);
+            result.EnsureSuccessStatusCode();
+            return user;
+        }
+
+        private static async Task DeleteUser(NewUserRequest request)
+        {
+            var client = new HttpClient();
+            var result = await client.DeleteAsync($"{hostAddress}/Instrumentation/{request.UUid}");
+            result.EnsureSuccessStatusCode();
         }
     }
 }

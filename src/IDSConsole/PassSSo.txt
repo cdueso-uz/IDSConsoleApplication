@@ -1,0 +1,63 @@
+
+SSO
+{
+  "https://userzoom.com/userzoom_id": 46310,
+  "https://userzoom.com/userzoom_uuid": "CD8889FA-9B8F-EA11-AA30-C93D14F19A25",
+  "https://userzoom.com/userzoom_name": "Carlos Dueso",
+  "given_name": "Carlos",
+  "family_name": "Dueso Sierra",
+  "nickname": "cdueso",
+  "name": "Carlos Dueso Sierra",
+  "picture": "https://lh5.googleusercontent.com/--Wl3ECJXrYs/AAAAAAAAAAI/AAAAAAAAAAA/AMZuucl8k4-kbCubTi--pn6_im9U0eb1sQ/photo.jpg",
+  "locale": "en",
+  "updated_at": "2020-09-01T07:43:59.090Z",
+  "email": "cdueso@userzoom.com",
+  "email_verified": true,
+  "sub": "google-apps|cdueso@userzoom.com",
+  "aud": "rIbdfnLBhek9gvF3WVV3QmV1b8eowapl", --> Client_id
+  "nonce": "ZdwXF7QoPNiAit7j" --> https://auth0.com/docs/authorization/mitigate-replay-attacks-when-using-the-implicit-flow
+}
+
+User Password
+{
+  "https://userzoom.com/userzoom_id": 46457,
+  "https://userzoom.com/userzoom_uuid": "5911B77C-46BC-EA11-AA30-C93D14F19A25",
+  "https://userzoom.com/userzoom_name": "Carlos Dueso",
+  "nickname": "cdueso",
+  "name": "cdueso@hotmail.es",
+  "picture": "https://s.gravatar.com/avatar/63b370b45f3391e6eb83ae5d77e5bc75?s=480&r=pg&d=https%3A%2F%2Fcdn.auth0.com%2Favatars%2Fcd.png",
+  "updated_at": "2020-09-04T10:27:21.727Z",
+  "email": "cdueso@hotmail.es",
+  "email_verified": true,
+  "iss": "https://signin-pre.auth.userzoom.com/",
+  "sub": "auth0|5911b77c-46bc-ea11-aa30-c93d14f19a25",
+  "aud": "rIbdfnLBhek9gvF3WVV3QmV1b8eowapl",
+  "iat": 1599215243,
+  "exp": 1599222443
+}
+
+
+
+
+
+{
+  "sub": "12345654321",
+  "auth_time": 1599215016,
+  "idp": "local",
+  "name": "Alice Smith",
+  "given_name": "Alice",
+  "family_name": "Smith",
+  "email": "AliceSmith@email.com",
+  "email_verified": true,
+  "jti": "DE6E9C0D710392974299835CBED974C6",
+  "sid": "308C4E84B2FAA35E6564E1D59F54A8D3",
+  "scope": [
+    "openid",
+    "profile",
+    "email",
+    "offline_access"
+  ],
+  "amr": [
+    "pwd"
+  ]
+}
